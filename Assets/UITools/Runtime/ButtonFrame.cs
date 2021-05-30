@@ -25,8 +25,6 @@ namespace Components
         private void OnValidate ()
         {
 
-            Debug.Log("ON VALIDATE");
-
             if (transform.parent == null)
             {
                 Debug.LogError ("Component has no parent, button frame requires parent to work!");

@@ -64,13 +64,11 @@ namespace Editor
                         Undo.DestroyObjectImmediate(btnFrameGo.GetComponent<HorizontalLayoutGroup>());
                     }
 
-                    Undo.AddComponent<VerticalLayoutGroup>(btnFrameGo);
+                    var vlc = Undo.AddComponent<VerticalLayoutGroup>(btnFrameGo);
+                    vlc.childAlignment = TextAnchor.MiddleCenter;
                 }
-                if(EditorGUI.EndChangeCheck())
-                {
-                    Undo.DestroyObjectImmediate(btnFrameGo.GetComponent<VerticalLayoutGroup>());
-                    Undo.AddComponent<HorizontalLayoutGroup>(btnFrameGo);
-                }
+                EditorGUI.EndChangeCheck();
+
             }
 
             if(GUILayout.Button("Horizontal Group"))
@@ -82,10 +80,10 @@ namespace Editor
                     {
                         Undo.DestroyObjectImmediate (btnFrameGo.GetComponent<VerticalLayoutGroup>());
                     }
-                    Undo.AddComponent<HorizontalLayoutGroup>(btnFrameGo);
+                    var hlc = Undo.AddComponent<HorizontalLayoutGroup>(btnFrameGo);
+                    hlc.childAlignment = TextAnchor.MiddleCenter;
                 }
                 //if(EditorGUI.EndChangeCheck()){}
-                EditorGUI.EndChangeCheck();
             }
 
             serializedObject.ApplyModifiedProperties ();

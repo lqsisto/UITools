@@ -78,7 +78,10 @@ namespace UISystem.Runtime
 				child.Internal_SetUIEnabled (false, false);
 				child.StateChanged += OnUIViewVisibilityChanged;
 			}
-
+			if(startView == null)
+			{
+				throw new Exception("Start view is null! You need to assing it in inspector.");
+			}
 			startView.Internal_SetUIEnabled(true,false);
 		}
 

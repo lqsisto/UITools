@@ -19,30 +19,30 @@ namespace Components
 
         private RectTransform attachedRectTransform;
 
-        public List<Button> instantiatedButtons = new List<Button>();
+        public List<GameObject> instantiatedButtons = new List<GameObject>();
         
 
         protected override void Reset()
         {
             base.Reset();
 
-            attachedRectTransform = GetComponent<RectTransform>();
             currentButtonAmount = transform.childCount;
             modifiedButtonAmount = currentButtonAmount;
-
-            m_ChildAlignment = TextAnchor.MiddleCenter;
-
-            childControlWidth = false;
-            childControlHeight = false;
-
 
             if (transform.childCount > 0)
             {
                 for (int i = 0; i < transform.childCount; i++)
                 {
-                    instantiatedButtons.Add(transform.GetChild(i).GetComponent<Button>());
+                    instantiatedButtons.Add(transform.GetChild(i).gameObject);
                 }
             }
+
+            attachedRectTransform = GetComponent<RectTransform>();
+
+            m_ChildAlignment = TextAnchor.MiddleCenter;
+
+            childControlWidth = false;
+            childControlHeight = false;
 
         }
 
@@ -162,7 +162,7 @@ namespace Components
                     var button = Instantiate(buttonPrefab, transform);
                     Undo.RegisterCreatedObjectUndo(button, "Created go");
                     button.name = "ButtonPrefab";
-                    instantiatedButtons.Add(button);
+                    instantiatedButtons.Add(button.gameObject);
                 }
 
                 instantiatedButtons.RemoveAll(item => item == null);
@@ -179,11 +179,13 @@ namespace Components
             for (int i = instantiatedButtons.Count - 1; i > (instantiatedButtons.Count - 1) - buttonsToRemove; i--)
             {
                 Undo.DestroyObjectImmediate(instantiatedButtons[i]);
-                yield return null;
             }
+
+
             instantiatedButtons.RemoveAll(item => item == null);
             currentButtonAmount = modifiedButtonAmount;
             Internal_SetRectSizeToMatchContentSize();
+            yield return null;
         }
 
         public override void CalculateLayoutInputHorizontal()

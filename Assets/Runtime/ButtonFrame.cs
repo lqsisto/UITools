@@ -63,10 +63,6 @@ namespace Components
             base.OnValidate();
             SetRectSizeToMatchContentSize();
 
-            if (!transform.parent.GetComponent<Canvas>())
-            {
-                throw new MissingComponentException("Parent Gameobject does not have canvas!");
-            }
             if (transform.parent == null)
             {
                 throw new UnityException("Gameobject has no parent");

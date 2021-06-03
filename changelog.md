@@ -1,3 +1,6 @@
+### 2021.06.03
+- Remove error check if buttonframe parent has no canvas
+
 ### 2021.06.02
 - Packages folder contents
 - Delete package.json

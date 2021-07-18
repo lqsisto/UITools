@@ -11,6 +11,10 @@ namespace Components
         [SerializeField] private int modifiedButtonAmount;
         [SerializeField] protected int currentButtonAmount;
 
+        [SerializeField] private float verticalMargin = 100f;
+        [SerializeField] private float horizontalMargin = 100f;
+
+        //disable values is always null warning
 #pragma warning disable CS0649 
         [SerializeField] private bool isVerticalLayoutGroup;
 #pragma warning restore CS0649 
@@ -20,7 +24,7 @@ namespace Components
         private RectTransform attachedRectTransform;
 
         public List<GameObject> instantiatedButtons = new List<GameObject>();
-        
+
 
         protected override void Reset()
         {
@@ -75,17 +79,17 @@ namespace Components
 
         public void SetRectSizeToMatchContentSize()
         {
+            Debug.Log("Set rect size");
             Internal_SetRectSizeToMatchContentSize();
         }
 
         private void Internal_SetRectSizeToMatchContentSize()
         {
-
-            if(!attachedRectTransform)
+            if (!attachedRectTransform)
             {
                 return;
             }
-
+            
 
             if (isVerticalLayoutGroup)
             {
@@ -101,14 +105,14 @@ namespace Components
                         var cr = c.GetComponent<RectTransform>();
                         height += cr.rect.height;
 
-                        if(cr.rect.width > widest)
+                        if (cr.rect.width > widest)
                         {
                             widest = cr.rect.width;
                         }
                     }
                 }
                 height += (m_Spacing * transform.childCount) + m_Padding.top + m_Padding.bottom;
-                widest += m_Padding.left + m_Padding.right;
+                widest += m_Padding.left + m_Padding.right + verticalMargin;
                 attachedRectTransform.sizeDelta = new Vector2(widest, height);
             }
             else
@@ -125,14 +129,14 @@ namespace Components
                         var cr = c.GetComponent<RectTransform>();
                         width += cr.rect.width;
 
-                        if(cr.rect.height > highest)
+                        if (cr.rect.height > highest)
                         {
                             highest = cr.rect.height;
                         }
                     }
                 }
                 width += (m_Spacing * transform.childCount) + m_Padding.left + m_Padding.right;
-                highest += m_Padding.top + m_Padding.bottom;
+                highest += m_Padding.top + m_Padding.bottom + horizontalMargin;
                 attachedRectTransform.sizeDelta = new Vector2(width, highest);
             }
         }
@@ -188,21 +192,25 @@ namespace Components
         {
             base.CalculateLayoutInputHorizontal();
             CalcAlongAxis(0, isVerticalLayoutGroup);
+
         }
 
         public override void CalculateLayoutInputVertical()
         {
             CalcAlongAxis(1, isVerticalLayoutGroup);
+
         }
 
         public override void SetLayoutHorizontal()
         {
             SetChildrenAlongAxis(0, isVerticalLayoutGroup);
+
         }
 
         public override void SetLayoutVertical()
         {
             SetChildrenAlongAxis(1, isVerticalLayoutGroup);
+
         }
     }
 }

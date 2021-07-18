@@ -16,6 +16,10 @@ namespace Editor
 
         private SerializedProperty isVerticalLayoutGroup;
 
+        private SerializedProperty verticalMargin;
+        private SerializedProperty horizontalMargin;
+
+
         private ButtonFrame buttonFrame;
 
         public override void OnInspectorGUI()
@@ -25,9 +29,16 @@ namespace Editor
             isVerticalLayoutGroup = serializedObject.FindProperty("isVerticalLayoutGroup");
             buttonPrefab = serializedObject.FindProperty("buttonPrefab");
 
+            verticalMargin = serializedObject.FindProperty("verticalMargin");
+            horizontalMargin = serializedObject.FindProperty("horizontalMargin");
+
             buttonFrame = (ButtonFrame)target;
 
             EditorGUILayout.PropertyField(buttonPrefab);
+            EditorGUILayout.PropertyField(verticalMargin);
+            EditorGUILayout.PropertyField(horizontalMargin);
+
+
             EditorGUILayout.BeginHorizontal();
             EditorGUI.BeginChangeCheck();
             if (GUILayout.Button("-"))

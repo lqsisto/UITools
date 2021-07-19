@@ -53,6 +53,7 @@ namespace Components
         protected override void OnEnable()
         {
             base.OnEnable();
+            SetRectSizeToMatchContentSize();
             EditorApplication.delayCall += SetRectSizeToMatchContentSize;
         }
 
@@ -85,7 +86,7 @@ namespace Components
 
         private void Internal_SetRectSizeToMatchContentSize()
         {
-            if (!attachedRectTransform)
+            if (!attachedRectTransform || transform.childCount <= 0)
             {
                 return;
             }
